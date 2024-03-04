@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Super ProCode Mode</title>
+
+    <link rel="stylesheet" href="./assets/reveal.css" />
+    <link rel="stylesheet" href="./assets/theme/black.css" id="theme" />
+
+    <link rel="stylesheet" href="./plugin/highlight/monokai.css" />
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>Super Procode mode</h1>
+          <p>What if - there were no framworks?</p>
+        </section>
+        <section>
+          <section data-markdown="slides/objective.md"></section>
+          <section
+            data-markdown="slides/hosts.md"
+            data-background-transition="slide"
+            data-background-size="contain"
+            data-background="slides/hosts.png"
+          ></section>
+          <section
+            data-markdown="slides/paul.md"
+            data-background-transition="slide"
+            data-background="slides/paul.png"
+          ></section>
+          <section
+            data-markdown="slides/stephan.md"
+            data-background-transition="slide"
+            data-background="slides/stephan.jpg"
+          ></section>
+        </section>
+
+        <section>
+          <section data-markdown="slides/history.md"></section>
+        </section>
+
+        <section>
+          <section data-markdown="slides/browsers.md"></section>
+        </section>
+
+        <section>
+          <section>
+            <h1 class="r-fit-text">Web Development ZEN</h1>
+          </section>
+          <section
+            data-background="slides/layout-behavior-structure/Canvas0.jpg"
+            data-background-size="contain"
+            data-background-transition="none"
+            data-background-color="white"
+          ></section>
+          <section
+            data-background="slides/layout-behavior-structure/Canvas2.jpg"
+            data-background-size="contain"
+            data-background-transition="none"
+            data-background-color="white"
+          ></section>
+        </section>
+        <section>
+          <section data-markdown="slides/examples.md"></section>
+        </section>
+        <section>
+          <section data-markdown># Layout</section>
+          <section data-markdown="slides/layout/bootstrap.md"></section>
+          <section data-markdown="slides/layout/flexbox.md"></section>
+        </section>
+        <section>
+          <section data-markdown># Data retrieval</section>
+          <section data-markdown="slides/data/framework.md"></section>
+          <section data-markdown="slides/data/fetch.md"></section>
+        </section>
+        <section>
+          <section data-markdown># Components</section>
+          <section data-markdown="slides/components/reactjs.md"></section>
+          <section data-markdown="slides/components/webcomponents.md"></section>
+        </section>
+        <section>
+          <section data-markdown># Decision cheat sheet</section>
+          <section data-markdown="slides/decisions.md"></section>
+          <section data-markdown="slides/tools.md"></section>
+        </section>
+        <section>
+          <section data-markdown># Q & A</section>
+          <section data-markdown># Thank you</section>
+        </section>
+      </div>
+    </div>
+
+    <script src="./assets/reveal.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/search/search.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+
+    <script>
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        plugins: [
+          RevealZoom,
+          RevealMarkdown,
+          RevealHighlight,
+          RevealNotes,
+          RevealSearch,
+          RevealMath.KaTeX
+        ]
+      });
+    </script>
+  </body>
+</html>
