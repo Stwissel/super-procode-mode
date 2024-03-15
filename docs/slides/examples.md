@@ -1,9 +1,19 @@
 # Examples
 
+The part where we show code <!-- .element: class="fragment" -->
+
+and you pay attention <!-- .element: class="fragment" -->
+
 ---
 
-## Layout
+## Layout <!-- .element: class="fragment" -->
 
-## Data retrieval
+Bootstrap vs. CSS Flexbox <!-- .element: class="fragment" -->
 
-## Components
+## Data retrieval <!-- .element: class="fragment" -->
+
+Axios vs. fetch <!-- .element: class="fragment" -->
+
+## Components <!-- .element: class="fragment" -->
+
+reactJS vs web components <!-- .element: class="fragment" -->
