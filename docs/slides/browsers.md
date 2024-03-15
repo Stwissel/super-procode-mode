@@ -66,3 +66,10 @@
 - ...as other browsers sometimes ignored them
 - [https://caniuse.com/](https://caniuse.com/) FTW
 - W3Schools shows browser support
+
+---
+
+## Can I use ?
+
+<iframe width="100%" height="800" src="https://caniuse.com/"></iframe>
+
