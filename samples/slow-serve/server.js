@@ -1,37 +1,48 @@
 const express = require('express');
 const ReadLine = require('n-readlines');
+const fs = require('fs');
 
 const app = express();
-const lineSource = new ReadLine('./sampleData.txt');
 
-let respStarted = false;
-
-app.get('/', (req, res) => {
-  if (!respStarted) {
-    res.writeHead(200, {
-      'Content-Type': 'application/json',
-      'Transfer-Encoding': 'chunked'
-    });
-    res.write('[\n');
-    respStarted = true;
-  }
-
-  let line = lineSource.next();
-  handleOneLine(line, res);
+app.use(express.static('public'));
+app.get('/data', (_req, res) => {
+  const lineSource = new ReadLine('./sampleData.txt');
+  res.writeHead(200, {
+    'Content-Type': 'application/json',
+    'Transfer-Encoding': 'chunked'
+  });
+  handleOneLine(lineSource, res, false);
 });
 
-const handleOneLine = (line, res) => {
+const handleOneLine = (lineSource, res, started) => {
+  let line = lineSource.next();
   if (line) {
+    if (!started) {
+      res.write('[\n');
+    } else {
+      res.write(',\n');
+    }
     res.write(line);
-    res.write(',\n');
     setTimeout(() => {
-      handleOneLine(lineSource.next(), res);
-    }, 500 /* 0.5 seconds delay */);
+      handleOneLine(lineSource, res, true);
+    }, 100 /* 0.1 seconds delay */);
   } else {
     res.write(']\n');
     res.end();
   }
 };
+
+app.get('/fast', (_req, res) => {
+  fs.readFile('./sampleData.txt', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Failed to fetch sampleData.txt');
+    } else {
+      data = data.replace(/\n/g, ',\n');
+      res.json(JSON.parse(`[${data}]`));
+    }
+  });
+});
 
 app.listen(3000, () => {
   console.log('Server listening on port 3000');
