@@ -14,6 +14,15 @@ app.get('/data', (_req, res) => {
   handleOneLine(lineSource, res, false);
 });
 
+app.get('/big', (_req, res) => {
+  const lineSource = new ReadLine('./sampleDataBig.txt');
+  res.writeHead(200, {
+    'Content-Type': 'application/json',
+    'Transfer-Encoding': 'chunked'
+  });
+  handleOneLine(lineSource, res, false);
+});
+
 const handleOneLine = (lineSource, res, started) => {
   let line = lineSource.next();
   if (line) {
@@ -34,6 +43,18 @@ const handleOneLine = (lineSource, res, started) => {
 
 app.get('/fast', (_req, res) => {
   fs.readFile('./sampleData.txt', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Failed to fetch sampleData.txt');
+    } else {
+      data = data.replace(/\n/g, ',\n');
+      res.json(JSON.parse(`[${data}]`));
+    }
+  });
+});
+
+app.get('/fastbig', (_req, res) => {
+  fs.readFile('./sampleDataBig.txt', 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       res.status(500).send('Failed to fetch sampleData.txt');

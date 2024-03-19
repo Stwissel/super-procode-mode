@@ -32,6 +32,11 @@ button {
   border-radius: 4px;
 }
 
+button:hover {
+  background-color: #ffe6e6;
+  cursor: pointer;
+}
+
 #message {
   position: fixed;
   left: 0;

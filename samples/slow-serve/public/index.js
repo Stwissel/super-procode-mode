@@ -107,6 +107,7 @@ const populateTable = (data) => {
 const clickBtnFetch = (event) => {
   event.preventDefault();
   clearResults();
+  document.body.style.cursor = 'wait';
   const startTime = new Date();
   message(`Fetching data...(${startTime})`);
   fetch(dataUrl)
@@ -116,15 +117,19 @@ const clickBtnFetch = (event) => {
       const endTime = new Date();
       const duration = endTime - startTime;
       message(`Data fetched in ${new Intl.NumberFormat().format(duration)} ms`);
+      document.body.style.cursor = 'default';
     })
-    .catch((error) => console.error('Error:', error));
+    .catch((error) => {
+      console.error('Error:', error);
+      document.body.style.cursor = 'default';
+    });
 };
 const clickBtnFetchChunk = (event) => {
   event.preventDefault();
   clearResults();
   const startTime = new Date();
   const table = document.getElementById('mainTableBody');
-  message(`Fetching data...(${startTime})`);
+  message(`Fetching data (chunks)...(${startTime})`);
   fetch(dataUrl)
     .then((response) => response.body)
     .then((body) =>
@@ -137,18 +142,34 @@ const clickBtnFetchChunk = (event) => {
     .then(() => {
       const endTime = new Date();
       const duration = endTime - startTime;
-      message(`Data fetched in ${new Intl.NumberFormat().format(duration)} ms`);
+      message(
+        `Data fetched chunks in ${new Intl.NumberFormat().format(duration)} ms`
+      );
     })
     .catch((error) => console.error('Error:', error));
 };
 const clickBtnAxios = (event) => {
   event.preventDefault();
   clearResults();
+  const startTime = new Date();
+  message(`Axios data...(${startTime})`);
+  axios
+    .get(dataUrl)
+    .then((response) => response.data)
+    .then((data) => populateTable(data))
+    .then(() => {
+      const endTime = new Date();
+      const duration = endTime - startTime;
+      message(`Data axios in ${new Intl.NumberFormat().format(duration)} ms`);
+    })
+    .catch((error) => console.error('Error:', error));
 };
 
 const clickBtnAxiosChunk = (event) => {
   event.preventDefault();
   clearResults();
+
+  message(`Sorry Dave, I'm afraid I can't do that`);
 };
 
 /* Function to setup the page */
