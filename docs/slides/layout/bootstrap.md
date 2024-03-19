@@ -40,12 +40,67 @@
 
 ---
 
-form layout screenshot 12 columns
+## Grid Layout
+
+```html
+<div class="row">
+  <div class="col-6">
+      6-col
+  </div>
+  <div class="col-3">
+      3-col
+  </div>
+  <div class="col">
+      col
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col-md-6">
+      Responsive 6-col
+  </div>
+  <div class="col-md-3">
+      Responsive 3-col
+  </div>
+  <div class="col-md-3">
+      Responsive 3-col
+  </div>
+</div>
+```
 
 ---
 
-form layout html
+## Form Layout
+
+```html
+<div class="row row-cols-2 form">
+  <div class="row row-cols-1 p-2 bg-light">
+      <h2>Personal Information</h2>
+      <div class="col">
+          <input type="text" class="form-control" placeholder="Name" aria-label="Name">
+      </div>
+      <div class="col">
+          <input type="number" class="form-control" placeholder="Age" aria-label="Age">
+      </div>
+      <div class="col">
+          <input type="text" class="form-control" placeholder="Email" aria-label="Email">
+      </div>
+  </div>
+  <div class="row row-cols-1 p-2 bg-light">
+      <h2>Address</h2>
+      <div class="col">
+          <input type="text" class="form-control" placeholder="Address" aria-label="Address">
+      </div>
+      <div class="col">
+          <input type="text" class="form-control" placeholder="Town" aria-label="Town">
+      </div>
+      <div class="col">
+          <input type="text" class="form-control" placeholder="Zip" aria-label="Zip">
+      </div>
+  </div>
+</div>
+```
 
 ---
 
-result screen shot
+![bootstrap](slides/layout/bootstrap.png)
