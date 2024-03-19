@@ -100,3 +100,11 @@ div.col input {
     font-size: 18px;
 }
 ```
+
+---
+
+![flexbox](slides/layout/flexbox.png)
+
+---
+
+![bootstrap is flexbox](slides/layout/bootstrap-flexbox.png)
