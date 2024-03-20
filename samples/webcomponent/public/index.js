@@ -1,32 +1,45 @@
-/* (C) 2024, HCL, Apache-2.0 License */
+/*
+ * (C) 2024, HCL, Apache-2.0 License
+ */
 
-/* Cleanup the results */
+/*
+ * Clear out all content of the main tag
+ */
 const clearResults = () => {
   const main = document.querySelector('main');
   while (main.firstChild) {
     main.removeChild(main.firstChild);
   }
+  message('Ratings cleared');
 };
 
-/* Display a message */
+/*
+ * Display a message on top of the page
+ */
 const message = (msg) => {
   document.getElementById('message').innerText = msg;
 };
 
-const createRatingComponent = (event) => {
-  event.preventDefault();
+/*
+ * Show the moddal dialog to create a new rating with given values
+ */
+const showNewRatingDialogue = () => {
   const dialog = document.getElementById('newRatingDialog');
   dialog.showModal();
 };
 
-const saveNewRating = (event) => {
-  event.preventDefault();
+/**
+ * Extract value from the form and create a new rating component
+ */
+const saveNewRating = () => {
+  // Collect values to use
   const form = document.getElementById('dialogForRating');
   const data = form.elements;
   const score = data.ratingvalue.value;
   const size = data.starSize.value;
   const stars = data.stars.value;
 
+  // Construct the new rating
   const main = document.querySelector('main');
   const rating = document.createElement('demo-rating');
   rating.setAttribute('score', score);
@@ -34,12 +47,16 @@ const saveNewRating = (event) => {
   rating.setAttribute('stars', stars);
   rating.id = new Date().getTime();
   main.appendChild(rating);
+
+  // Close the dialog
   const dialog = document.getElementById('newRatingDialog');
   dialog.close();
 };
 
-const showCurrenRating = (event) => {
-  event.preventDefault();
+/**
+ * Grab all ratings and show them on top of the page
+ */
+const showCurrenRating = () => {
   const ratings = document.querySelectorAll('demo-rating');
   let r = [];
   ratings.forEach((rating) =>
@@ -48,55 +65,80 @@ const showCurrenRating = (event) => {
   message(`Current scores are ${r.join(', ')}`);
 };
 
-const setCurrentRatingFull = (event) => {
-  event.preventDefault();
+/**
+ * Set all ratings to their maximum value
+ */
+const setCurrentRatingFull = () => {
   const ratings = document.querySelectorAll('demo-rating');
   ratings.forEach((rating) =>
     rating.setAttribute('score', rating.getAttribute('stars'))
   );
 };
 
-const setCurrentRatingSize = (event) => {
-  event.preventDefault();
+/**
+ * Sey all ratings to zero
+ */
+const setCurrentRatingZero = () => {
+  const ratings = document.querySelectorAll('demo-rating');
+  ratings.forEach((rating) => rating.setAttribute('score', 0));
+};
+
+/**
+ * Make all ratings the same size and toggle between 24px and 36px
+ */
+const setCurrentRatingSize = () => {
   const ratings = document.querySelectorAll('demo-rating');
   const size = ratings[0].getAttribute('size');
   const newSize = size == '24px' ? '36px' : '24px';
   ratings.forEach((rating) => rating.setAttribute('size', newSize));
 };
 
-const listenForRatingChange = (event) => {
-  event.preventDefault();
+/**
+ * Hook listeners to all ratings to listen for changes
+ * and display them on top of the page
+ */
+const listenForRatingChange = () => {
+  const ratings = document.querySelectorAll('demo-rating');
+  ratings.forEach((rating) => {
+    rating.addEventListener('change', (event) => {
+      message(
+        `Rating ${rating.id} changed to ${event.detail.score}/${event.detail.max}`
+      );
+    });
+  });
 };
 
-/* Function to setup the page */
+/**
+ * Hook a click event to an element
+ *
+ * @param {string} elementId - what element to capture the click event on
+ * @param {function} - function to call when the click event is captured
+
+ }} processFunction
+ */
+const captureClickEvent = (elementId, processFunction) => {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.addEventListener('click', (event) => {
+      event.preventDefault();
+      processFunction();
+    });
+  } else {
+    console.error(`Element ${elementId} not found`);
+  }
+};
+
+/* Function to setup the page, hook in the Button's click event */
 const setupPage = () => {
   // Wire up the buttons
-  document
-    .getElementById('btnCreate')
-    .addEventListener('click', createRatingComponent);
-
-  document
-    .getElementById('btnShow')
-    .addEventListener('click', showCurrenRating);
-
-  document
-    .getElementById('btnFull')
-    .addEventListener('click', setCurrentRatingFull);
-
-  document
-    .getElementById('btnSet')
-    .addEventListener('click', setCurrentRatingSize);
-
-  document
-    .getElementById('btnListen')
-    .addEventListener('click', listenForRatingChange);
-
-  document.getElementById('btnSave').addEventListener('click', saveNewRating);
-
-  document.getElementById('btnClearAll').addEventListener('click', (event) => {
-    event.preventDefault();
-    clearResults();
-  });
+  captureClickEvent('btnCreate', showNewRatingDialogue);
+  captureClickEvent('btnShow', showCurrenRating);
+  captureClickEvent('btnFull', setCurrentRatingFull);
+  captureClickEvent('btnZero', setCurrentRatingZero);
+  captureClickEvent('btnSet', setCurrentRatingSize);
+  captureClickEvent('btnListen', listenForRatingChange);
+  captureClickEvent('btnSave', saveNewRating);
+  captureClickEvent('btnClearAll', clearResults);
 
   console.log('Page loaded, ready to go');
 };

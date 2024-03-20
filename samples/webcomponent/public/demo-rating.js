@@ -80,7 +80,7 @@ class DemoRating extends HTMLElement {
 
   addEventListeners() {
     this.addEventListener('change', () => {
-      // Handle change event
+      console.log('change inside the demo-rating componetn');
     });
   }
 
@@ -114,7 +114,16 @@ class DemoRating extends HTMLElement {
   setScore(score) {
     this.score = score;
     this.setAttribute('score', score);
-    this.dispatchEvent(new Event('change'));
+    const eventDetails = {
+      score: score,
+      id: this.id,
+      max: this.stars
+    };
+    const event = new CustomEvent('change', {
+      bubbles: true,
+      detail: eventDetails
+    });
+    this.dispatchEvent(event);
   }
 }
 
