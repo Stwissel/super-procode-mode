@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Web component demo</title>
+    <link rel="stylesheet" href="index.css" /
+  </head>
+  <body>
+    <header>
+      <div id="message">Click a button</div>
+      <h1>Web component Demo</h1>
+      <div class="button-row">
+        <button id="btnCreate">Create additional rating</button>
+        <button id="btnShow">Show ratings values</button>
+        <button id="btnFull">Set all ratings to max</button>
+        <button id="btnSet">Set ratings size</button>
+        <button id="btnListen">Listen to ratings changes</button>
+        <button id="btnClearAll">Clear all ratings</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- here shall be dragons -->
+      <demo-rating id="rating" score="3" stars="7"></demo-rating>
+    </main>
+
+    <footer>
+      <p>WebComponent Demo &copy; 2024 HCL, Apache-2.0 licensed</p>
+    </footer>
+
+    <!-- Dialog for new ratings -->
+    <dialog id="newRatingDialog">
+      <form method="dialog" id="dialogForRating">
+        <label for="stars">How many stars</label>
+        <input type="number" id="stars" name="ratingValue" min="0" max="42" value="5"/>
+        <label for="ratingvalue">Initial rating value</label>
+        <input type="number" id="ratingvalue" name="ratingvalue" min="0" max="42" value="0" />
+        <label for="starSize">How big (valid CSS size)</label>
+        <input type="text" id="starSize" name="starSize" value="24px" />
+        <div>
+        <button id="btnSave">Save</button>
+        <button id="btnCancel">Cancel</button>
+      </div>
+      </form>
+    <script src="index.js"></script>
+    <script src="demo-rating.js"></script>
+  </body>
+</html>
