@@ -1,3 +1,7 @@
+/**
+ * (C) 2024, HCL, Apache-2.0 License
+ * A simple web component to display a rating
+ */
 class DemoRating extends HTMLElement {
   constructor() {
     super();
