@@ -20,6 +20,17 @@ const message = (msg) => {
   document.getElementById('message').innerText = msg;
 };
 
+/**
+ * Add a new message to the list
+ * @param {string} msg
+ */
+const changeMessage = (msg) => {
+  const change = document.getElementById('changes');
+  const li = document.createElement('li');
+  li.innerText = msg;
+  change.appendChild(li);
+};
+
 /*
  * Show the moddal dialog to create a new rating with given values
  */
@@ -101,7 +112,7 @@ const listenForRatingChange = () => {
   const ratings = document.querySelectorAll('demo-rating');
   ratings.forEach((rating) => {
     rating.addEventListener('change', (event) => {
-      message(
+      changeMessage(
         `Rating ${rating.id} changed to ${event.detail.score}/${event.detail.max}`
       );
     });

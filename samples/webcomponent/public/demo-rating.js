@@ -96,9 +96,25 @@ class DemoRating extends HTMLElement {
     console.log(`${name} changed from ${oldValue} to ${newValue}`);
     if (oldValue !== newValue && this.connected) {
       this[name] = newValue;
+      if (name === 'score') {
+        this.fireChangeEvent();
+      }
       this.render();
     }
   }
+
+  fireChangeEvent = () => {
+    const eventDetails = {
+      score: this.score,
+      id: this.id,
+      max: this.stars
+    };
+    const event = new CustomEvent('change', {
+      bubbles: true,
+      detail: eventDetails
+    });
+    this.dispatchEvent(event);
+  };
 
   /**
    * List attributes to observe and trigger attributeChangedCallback
@@ -114,16 +130,6 @@ class DemoRating extends HTMLElement {
   setScore(score) {
     this.score = score;
     this.setAttribute('score', score);
-    const eventDetails = {
-      score: score,
-      id: this.id,
-      max: this.stars
-    };
-    const event = new CustomEvent('change', {
-      bubbles: true,
-      detail: eventDetails
-    });
-    this.dispatchEvent(event);
   }
 }
 
