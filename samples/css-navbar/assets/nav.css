@@ -68,4 +68,7 @@
   .nav ul li {
     float: none;
   }
-}
+
+  .dropdown-content {
+    width: 100%
+  }
