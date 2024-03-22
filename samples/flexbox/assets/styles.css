@@ -8,23 +8,23 @@ body {
     display: flex;
     flex-flow: row wrap;
     align-items: stretch;
-}
 
-.basic > div {
-    border-collapse: collapse;
-    border: #000088 1px solid;
-    padding: 2px;
+    div {
+        border-collapse: collapse;
+        border: #000088 1px solid;
+        padding: 2px;
+    }
 }
 
 .resp {
     display: flex;
     flex-direction: row;
-}
 
-.resp > div {
-    border-collapse: collapse;
-    border: #008800 1px solid;
-    padding: 2px;
+    div {
+        border-collapse: collapse;
+        border: #008800 1px solid;
+        padding: 2px;
+    }
 }
 
 @media (max-width: 800px) {
@@ -46,9 +46,10 @@ body {
     flex-direction: column;
     padding: 5px 0;
     background-color: #f1f1f1;
-}
 
-div.col input {
-    margin: 5px;
-    font-size: 18px;
+    input {
+        margin: 5px;
+        font-size: 18px;
+        color: #0000DD;
+    }
 }
