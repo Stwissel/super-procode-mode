@@ -49,14 +49,18 @@ const saveNewRating = () => {
   const score = data.ratingvalue.value;
   const size = data.starSize.value;
   const stars = data.stars.value;
+  const title = data.title.value;
 
   // Construct the new rating
   const main = document.querySelector('main');
   const rating = document.createElement('demo-rating');
-  rating.setAttribute('score', score);
-  rating.setAttribute('size', size);
-  rating.setAttribute('stars', stars);
+  rating.stars = stars;
+  rating.score = score;
+  rating.size = size;
   rating.id = new Date().getTime();
+  if (title) {
+    rating.appendChild(document.createTextNode(title));
+  }
   main.appendChild(rating);
 
   // Close the dialog
@@ -70,9 +74,7 @@ const saveNewRating = () => {
 const showCurrenRating = () => {
   const ratings = document.querySelectorAll('demo-rating');
   let r = [];
-  ratings.forEach((rating) =>
-    r.push(`${rating.getAttribute('score')}/${rating.getAttribute('stars')}`)
-  );
+  ratings.forEach((rating) => r.push(`${rating.score}/${rating.stars}`));
   message(`Current scores are ${r.join(', ')}`);
 };
 
@@ -81,9 +83,7 @@ const showCurrenRating = () => {
  */
 const setCurrentRatingFull = () => {
   const ratings = document.querySelectorAll('demo-rating');
-  ratings.forEach((rating) =>
-    rating.setAttribute('score', rating.getAttribute('stars'))
-  );
+  ratings.forEach((rating) => (rating.score = rating.stars));
 };
 
 /**
@@ -91,7 +91,7 @@ const setCurrentRatingFull = () => {
  */
 const setCurrentRatingZero = () => {
   const ratings = document.querySelectorAll('demo-rating');
-  ratings.forEach((rating) => rating.setAttribute('score', 0));
+  ratings.forEach((rating) => (rating.score = 0));
 };
 
 /**
@@ -102,6 +102,14 @@ const setCurrentRatingSize = () => {
   const size = ratings[0].getAttribute('size');
   const newSize = size == '24px' ? '36px' : '24px';
   ratings.forEach((rating) => rating.setAttribute('size', newSize));
+};
+
+const addStars = () => {
+  const ratings = document.querySelectorAll('demo-rating');
+  ratings.forEach((rating) => {
+    const actual = rating.stars + 1;
+    rating.stars = actual;
+  });
 };
 
 /**
@@ -147,6 +155,7 @@ const setupPage = () => {
   captureClickEvent('btnFull', setCurrentRatingFull);
   captureClickEvent('btnZero', setCurrentRatingZero);
   captureClickEvent('btnSet', setCurrentRatingSize);
+  captureClickEvent('btnAddStar', addStars);
   captureClickEvent('btnListen', listenForRatingChange);
   captureClickEvent('btnSave', saveNewRating);
   captureClickEvent('btnClearAll', clearResults);

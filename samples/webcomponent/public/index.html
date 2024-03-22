@@ -15,6 +15,7 @@
         <button id="btnFull">Set all ratings to max</button>
         <button id="btnZero">Set all ratings to 0</button>
         <button id="btnSet">Set ratings size</button>
+        <button id="btnAddStar">Extend rating by one star</button>
         <button id="btnListen">Listen to ratings changes</button>
         <button id="btnClearAll">Clear all ratings</button>
       </div>
@@ -24,6 +25,7 @@
     <main>
       <!-- here shall be dragons -->
       <demo-rating id="rating" score="3" stars="7">
+        Food
       </demo-rating>
     </main>
 
@@ -34,6 +36,8 @@
     <!-- Dialog for new ratings -->
     <dialog id="newRatingDialog">
       <form method="dialog" id="dialogForRating">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" placeholder="A witty title" />
         <label for="stars">How many stars</label>
         <input type="number" id="stars" name="ratingValue" min="0" max="42" value="5"/>
         <label for="ratingvalue">Initial rating value</label>
@@ -46,6 +50,6 @@
       </div>
       </form>
     <script src="index.js"></script>
-    <script src="demo-rating.js"></script>
+    <script type="module" src="demo-rating.js"></script>
   </body>
 </html>
