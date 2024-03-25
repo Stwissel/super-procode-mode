@@ -1,4 +1,4 @@
-# Component Differences
+# Component Differencs<!-- .element: class="r-fit-text" -->
 
 | reactJS                                   | webComponent                |
 | ----------------------------------------- | --------------------------- |

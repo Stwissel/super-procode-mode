@@ -111,7 +111,7 @@ export default class DemoRating extends HTMLElement {
 
   addEventListeners() {
     this.addEventListener('change', () => {
-      console.log('change inside the demo-rating componetn');
+      console.log('change inside the demo-rating component');
     });
   }
 
