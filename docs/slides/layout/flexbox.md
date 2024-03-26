@@ -108,3 +108,4 @@ div.col input {
 ---
 
 ![bootstrap is flexbox](slides/layout/bootstrap-flexbox.png)
+
