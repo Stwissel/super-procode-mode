@@ -7,7 +7,7 @@
   </head>
   <body>
     <header>
-      <div id="message">Click a button</div>
+      <demo-message id="message" msg="Click a button"></demo-message>
       <h1>Web component Demo</h1>
       <div class="button-row">
         <button id="btnCreate">Create additional rating</button>
@@ -24,32 +24,20 @@
 
     <main>
       <!-- here shall be dragons -->
-      <demo-rating id="rating" score="3" stars="7">
+      <demo-rating id="rating" score="3" stars="7" size="24px">
         Food
       </demo-rating>
     </main>
+
+    <demo-new-rating id="newRating" active="false"></demo-new-rating>
 
     <footer>
       <p>WebComponent Demo &copy; 2024 HCL, Apache-2.0 licensed</p>
     </footer>
 
-    <!-- Dialog for new ratings -->
-    <dialog id="newRatingDialog">
-      <form method="dialog" id="dialogForRating">
-        <label for="title">Title</label>
-        <input type="text" id="title" name="title" placeholder="A witty title" />
-        <label for="stars">How many stars</label>
-        <input type="number" id="stars" name="ratingValue" min="0" max="42" value="5"/>
-        <label for="ratingvalue">Initial rating value</label>
-        <input type="number" id="ratingvalue" name="ratingvalue" min="0" max="42" value="0" />
-        <label for="starSize">How big (valid CSS size)</label>
-        <input type="text" id="starSize" name="starSize" value="24px" />
-        <div>
-        <button id="btnSave">Save</button>
-        <button id="btnCancel">Cancel</button>
-      </div>
-      </form>
     <script src="index.js"></script>
     <script type="module" src="demo-rating.js"></script>
+    <script type="module" src="demo-new-rating.js"></script>
+    <script type="module" src="demo-message.js"></script>
   </body>
 </html>

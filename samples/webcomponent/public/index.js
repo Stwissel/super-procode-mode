@@ -17,7 +17,7 @@ const clearResults = () => {
  * Display a message on top of the page
  */
 const message = (msg) => {
-  document.getElementById('message').innerText = msg;
+  document.getElementById('message').msg = msg;
 };
 
 /**
@@ -35,37 +35,25 @@ const changeMessage = (msg) => {
  * Show the moddal dialog to create a new rating with given values
  */
 const showNewRatingDialogue = () => {
-  const dialog = document.getElementById('newRatingDialog');
-  dialog.showModal();
+  const dialog = document.getElementById('newRating');
+  dialog.active = true;
 };
 
 /**
  * Extract value from the form and create a new rating component
  */
-const saveNewRating = () => {
-  // Collect values to use
-  const form = document.getElementById('dialogForRating');
-  const data = form.elements;
-  const score = data.ratingvalue.value;
-  const size = data.starSize.value;
-  const stars = data.stars.value;
-  const title = data.title.value;
+const createNewRating = (event) => {
+  event.preventDefault();
 
   // Construct the new rating
   const main = document.querySelector('main');
   const rating = document.createElement('demo-rating');
-  rating.stars = stars;
-  rating.score = score;
-  rating.size = size;
+  rating.stars = event.detail.stars;
+  rating.score = event.detail.score;
+  rating.size = event.detail.size;
   rating.id = new Date().getTime();
-  if (title) {
-    rating.appendChild(document.createTextNode(title));
-  }
+  rating.appendChild(document.createTextNode(event.detail.title));
   main.appendChild(rating);
-
-  // Close the dialog
-  const dialog = document.getElementById('newRatingDialog');
-  dialog.close();
 };
 
 /**
@@ -157,8 +145,10 @@ const setupPage = () => {
   captureClickEvent('btnSet', setCurrentRatingSize);
   captureClickEvent('btnAddStar', addStars);
   captureClickEvent('btnListen', listenForRatingChange);
-  captureClickEvent('btnSave', saveNewRating);
   captureClickEvent('btnClearAll', clearResults);
+  document
+    .getElementById('newRating')
+    .addEventListener('newRating', createNewRating);
 
   console.log('Page loaded, ready to go');
 };
