@@ -5,6 +5,28 @@ const port = 3000;
 
 app.get("/", async (req, res) => {
   let html;
+  html = `
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+  <h1>Axios Example</h1>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Status</th>
+    </tr>`;
   try {
     let config = {
       method: "get",
@@ -15,28 +37,6 @@ app.get("/", async (req, res) => {
       },
     };
     const response = await axios.request(config);
-    html = `
-    <style>
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      th, td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: left;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-    </style>
-    <h1>Axios Example</h1>
-    <table>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Status</th>
-      </tr>`;
     response.data.forEach((pet) => {
       html += `<tr><td>${pet.id}</td><td>${pet.name}</td><td>${pet.status}</td></tr>`;
     });
