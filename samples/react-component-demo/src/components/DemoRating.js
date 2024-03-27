@@ -8,6 +8,7 @@ export default class DemoRating extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      children: props.children,
       id: props.id,
       stars: props.stars,
       score: props.score,
@@ -42,6 +43,11 @@ export default class DemoRating extends React.Component {
   };
 
   render() {
-    return <div>{this.renderStars()}</div>;
+    return (
+      <div className="demorating">
+        <h3>{this.state.children}</h3>
+        {this.renderStars()}
+      </div>
+    );
   }
 }

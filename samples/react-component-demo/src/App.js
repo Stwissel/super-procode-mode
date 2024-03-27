@@ -2,13 +2,43 @@
  * (C) 2024, HCL, Apache-2.0 License
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import DemoRating from './components/DemoRating';
 import DemoMessage from './components/DemoMessage';
 
 function App() {
-  const ratingArray = [React.createRef()];
+  const initialRating = {
+    id: 'rating1',
+    stars: 5,
+    score: 3,
+    siz: '24px',
+    title: 'Food',
+    ref: React.createRef()
+  };
+
+  const [ratingArray, setRatingArray] = useState([initialRating]);
+
+  document
+    .getElementById('btnSaveNewRating')
+    .addEventListener('click', (event) => {
+      event.preventDefault();
+      const form = document.getElementById('dialogForRating');
+      const data = form.elements;
+      const newborn = {
+        id: new Date().getTime(),
+        stars: data.stars.value,
+        score: data.ratingvalue.value,
+        size: data.starSize.value,
+        title: data.title.value || 'undefined',
+        ref: React.createRef()
+      };
+      let newRatingArray = [...ratingArray];
+      newRatingArray.push(newborn);
+      const dialog = document.getElementById('newRatingDialog');
+      dialog.close();
+      setRatingArray(newRatingArray);
+    });
 
   const [msg, setMsg] = React.useState('Press a button');
 
@@ -45,25 +75,8 @@ function App() {
    * Show the moddal dialog to create a new rating with given values
    */
   const showNewRatingDialogue = () => {
-    const dialog = document.getElementById('newRating');
-    dialog.active = true;
-  };
-
-  /**
-   * Extract value from the form and create a new rating component
-   */
-  const createNewRating = (event) => {
-    event.preventDefault();
-
-    // Construct the new rating
-    const main = document.querySelector('main');
-    const rating = document.createElement('demo-rating');
-    rating.stars = event.detail.stars;
-    rating.score = event.detail.score;
-    rating.size = event.detail.size;
-    rating.id = new Date().getTime();
-    rating.appendChild(document.createTextNode(event.detail.title));
-    main.appendChild(rating);
+    const dialog = document.getElementById('newRatingDialog');
+    dialog.show();
   };
 
   /**
@@ -72,7 +85,7 @@ function App() {
   const showCurrenRating = () => {
     let r = [];
     ratingArray.forEach((ratingref) => {
-      const rating = ratingref.current;
+      const rating = ratingref.ref.current;
       r.push(`${rating.state.score}/${rating.state.stars}`);
     });
     message(`Current scores are ${r.join(', ')}`);
@@ -82,33 +95,39 @@ function App() {
    * Set all ratings to their maximum value
    */
   const setCurrentRatingFull = () => {
-    const ratings = document.querySelectorAll('demo-rating');
-    ratings.forEach((rating) => (rating.score = rating.stars));
+    ratingArray.forEach((ratingref) => {
+      const rating = ratingref.ref.current;
+      rating.setState({ score: rating.state.stars });
+    });
   };
 
   /**
    * Sey all ratings to zero
    */
   const setCurrentRatingZero = () => {
-    const ratings = document.querySelectorAll('demo-rating');
-    ratings.forEach((rating) => (rating.score = 0));
+    ratingArray.forEach((ratingref) => {
+      const rating = ratingref.ref.current;
+      rating.setState({ score: 0 });
+    });
   };
 
   /**
    * Make all ratings the same size and toggle between 24px and 36px
    */
   const setCurrentRatingSize = () => {
-    const ratings = document.querySelectorAll('demo-rating');
-    const size = ratings[0].getAttribute('size');
-    const newSize = size == '24px' ? '36px' : '24px';
-    ratings.forEach((rating) => rating.setAttribute('size', newSize));
+    const size = ratingArray[0].ref.current.state.size;
+    const newSize = size === '24px' ? '36px' : '24px';
+    ratingArray.forEach((ratingref) => {
+      const rating = ratingref.ref.current;
+      rating.setState({ size: newSize });
+    });
   };
 
   const addStars = () => {
-    const ratings = document.querySelectorAll('demo-rating');
-    ratings.forEach((rating) => {
-      const actual = rating.stars + 1;
-      rating.stars = actual;
+    ratingArray.forEach((ratingref) => {
+      const rating = ratingref.ref.current;
+      const actual = Number(rating.state.stars) + 1;
+      rating.setState({ stars: actual });
     });
   };
 
@@ -125,6 +144,25 @@ function App() {
         );
       });
     });
+  };
+
+  const renderRatings = () => {
+    const ratingElements = [];
+    ratingArray.forEach((ratingdef) => {
+      ratingElements.push(
+        <DemoRating
+          ref={ratingdef.ref}
+          id={ratingdef.id}
+          key={ratingdef.id}
+          stars={ratingdef.stars}
+          score={ratingdef.score}
+          size={ratingdef.size}
+        >
+          {ratingdef.title}
+        </DemoRating>
+      );
+    });
+    return ratingElements;
   };
 
   /**
@@ -154,7 +192,11 @@ function App() {
           <button id="btnAddStar" onClick={addStars}>
             Extend ratings by one star
           </button>
-          <button id="btnListen" onClick={listenForRatingChange}>
+          <button
+            id="btnListen"
+            onClick={listenForRatingChange}
+            className="unfixed"
+          >
             Listen to ratings changes
           </button>
           <button id="btnClearAll" onClick={clearResults}>
@@ -163,17 +205,7 @@ function App() {
         </div>
         <ul id="changes"></ul>
       </header>
-      <main>
-        <DemoRating
-          ref={ratingArray[0]}
-          id="rating1"
-          stars={5}
-          score={3}
-          size={'24px'}
-        >
-          Food
-        </DemoRating>
-      </main>
+      <main>{renderRatings()}</main>
       <footer>
         <p>WebComponent Demo &copy; 2024 HCL, Apache-2.0 licensed</p>
       </footer>

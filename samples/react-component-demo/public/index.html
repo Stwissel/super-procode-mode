@@ -29,15 +29,40 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <dialog id="newRatingDialog">
+      <form method="dialog" id="dialogForRating">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          placeholder="A witty title"
+        />
+        <label for="stars">How many stars</label>
+        <input
+          type="number"
+          id="stars"
+          name="ratingValue"
+          min="0"
+          max="42"
+          value="5"
+        />
+        <label for="ratingvalue">Initial rating value</label>
+        <input
+          type="number"
+          id="ratingvalue"
+          name="ratingvalue"
+          min="0"
+          max="42"
+          value="0"
+        />
+        <label for="starSize">How big (valid CSS size)</label>
+        <input type="text" id="starSize" name="starSize" value="24px" />
+        <div>
+          <button id="btnSaveNewRating">Save</button>
+          <button id="btnCancel">Cancel</button>
+        </div>
+      </form>
+    </dialog>
   </body>
 </html>
