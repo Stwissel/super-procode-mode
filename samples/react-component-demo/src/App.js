@@ -2,54 +2,32 @@
  * (C) 2024, HCL, Apache-2.0 License
  */
 
-import React, { useState } from 'react';
 import './App.css';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { subscribe, unsubscribe } from './events';
+import {
+  updateScore,
+  updateStars,
+  updateSize,
+  clearRatings
+} from './components/ratingSlice';
 import DemoRating from './components/DemoRating';
 import DemoMessage from './components/DemoMessage';
+import DemoNewRating from './components/DemoNewRating';
 
 function App() {
-  const initialRating = {
-    id: 'rating1',
-    stars: 5,
-    score: 3,
-    siz: '24px',
-    title: 'Food',
-    ref: React.createRef()
-  };
+  const ratings = useSelector((state) => state.ratingStore.ratings);
+  const dispatch = useDispatch();
 
-  const [ratingArray, setRatingArray] = useState([initialRating]);
-
-  document
-    .getElementById('btnSaveNewRating')
-    .addEventListener('click', (event) => {
-      event.preventDefault();
-      const form = document.getElementById('dialogForRating');
-      const data = form.elements;
-      const newborn = {
-        id: new Date().getTime(),
-        stars: data.stars.value,
-        score: data.ratingvalue.value,
-        size: data.starSize.value,
-        title: data.title.value || 'undefined',
-        ref: React.createRef()
-      };
-      let newRatingArray = [...ratingArray];
-      newRatingArray.push(newborn);
-      const dialog = document.getElementById('newRatingDialog');
-      dialog.close();
-      setRatingArray(newRatingArray);
-    });
-
-  const [msg, setMsg] = React.useState('Press a button');
+  const [msg, setMsg] = useState('Press a button');
+  const [eventListener, setEventListener] = useState(false);
 
   /*
    * Clear out all content of the main tag
    */
   const clearResults = () => {
-    const main = document.querySelector('main');
-    while (main.firstChild) {
-      main.removeChild(main.firstChild);
-    }
+    dispatch(clearRatings());
     message('Ratings cleared');
   };
 
@@ -84,9 +62,9 @@ function App() {
    */
   const showCurrenRating = () => {
     let r = [];
-    ratingArray.forEach((ratingref) => {
-      const rating = ratingref.ref.current;
-      r.push(`${rating.state.score}/${rating.state.stars}`);
+    Object.keys(ratings).forEach((key) => {
+      const rating = ratings[key];
+      r.push(`${rating.score}/${rating.stars}`);
     });
     message(`Current scores are ${r.join(', ')}`);
   };
@@ -95,40 +73,59 @@ function App() {
    * Set all ratings to their maximum value
    */
   const setCurrentRatingFull = () => {
-    ratingArray.forEach((ratingref) => {
-      const rating = ratingref.ref.current;
-      rating.setState({ score: rating.state.stars });
+    const payload = [];
+    Object.keys(ratings).forEach((key) => {
+      const rating = ratings[key];
+      const newRating = { id: rating.id, score: rating.stars };
+      payload.push(newRating);
     });
+    dispatch(updateScore(payload));
   };
 
   /**
    * Sey all ratings to zero
    */
   const setCurrentRatingZero = () => {
-    ratingArray.forEach((ratingref) => {
-      const rating = ratingref.ref.current;
-      rating.setState({ score: 0 });
+    const payload = [];
+    Object.keys(ratings).forEach((key) => {
+      const rating = ratings[key];
+      const newRating = { id: rating.id, score: 0 };
+      payload.push(newRating);
     });
+    dispatch(updateScore(payload));
   };
 
   /**
    * Make all ratings the same size and toggle between 24px and 36px
    */
   const setCurrentRatingSize = () => {
-    const size = ratingArray[0].ref.current.state.size;
-    const newSize = size === '24px' ? '36px' : '24px';
-    ratingArray.forEach((ratingref) => {
-      const rating = ratingref.ref.current;
-      rating.setState({ size: newSize });
+    const payload = [];
+    let oldSize = null;
+    Object.keys(ratings).forEach((key) => {
+      const rating = ratings[key];
+      oldSize = oldSize || rating.size;
+      const newSize = oldSize === '24px' ? '36px' : '24px';
+      const newRating = { id: rating.id, size: newSize };
+      payload.push(newRating);
     });
+    dispatch(updateSize(payload));
   };
 
   const addStars = () => {
-    ratingArray.forEach((ratingref) => {
-      const rating = ratingref.ref.current;
-      const actual = Number(rating.state.stars) + 1;
-      rating.setState({ stars: actual });
+    const payload = [];
+    Object.keys(ratings).forEach((key) => {
+      const rating = ratings[key];
+      const actual = Number(rating.stars) + 1;
+      const newRating = { id: rating.id, stars: actual };
+      payload.push(newRating);
     });
+    dispatch(updateStars(payload));
+  };
+
+  const incomingChange = (event) => {
+    changeMessage(
+      `Rating ${event.detail.id} changed to ${event.detail.score}/${event.detail.max}`
+    );
   };
 
   /**
@@ -136,31 +133,22 @@ function App() {
    * and display them on top of the page
    */
   const listenForRatingChange = () => {
-    const ratings = document.querySelectorAll('demo-rating');
-    ratings.forEach((rating) => {
-      rating.addEventListener('change', (event) => {
-        changeMessage(
-          `Rating ${rating.id} changed to ${event.detail.score}/${event.detail.max}`
-        );
-      });
-    });
+    if (eventListener) {
+      message('Event listener removed');
+      setEventListener(false);
+      unsubscribe('demoRatingChange', incomingChange);
+      return;
+    }
+    setEventListener(true);
+    message('Event listener started');
+    subscribe('demoRatingChange', incomingChange);
   };
 
   const renderRatings = () => {
     const ratingElements = [];
-    ratingArray.forEach((ratingdef) => {
-      ratingElements.push(
-        <DemoRating
-          ref={ratingdef.ref}
-          id={ratingdef.id}
-          key={ratingdef.id}
-          stars={ratingdef.stars}
-          score={ratingdef.score}
-          size={ratingdef.size}
-        >
-          {ratingdef.title}
-        </DemoRating>
-      );
+    Object.keys(ratings).forEach((key) => {
+      const ratingdef = ratings[key];
+      ratingElements.push(<DemoRating key={ratingdef.id} id={ratingdef.id} />);
     });
     return ratingElements;
   };
@@ -195,7 +183,7 @@ function App() {
           <button
             id="btnListen"
             onClick={listenForRatingChange}
-            className="unfixed"
+            className={eventListener ? 'unfixed' : ''}
           >
             Listen to ratings changes
           </button>
@@ -206,6 +194,7 @@ function App() {
         <ul id="changes"></ul>
       </header>
       <main>{renderRatings()}</main>
+      <DemoNewRating></DemoNewRating>
       <footer>
         <p>WebComponent Demo &copy; 2024 HCL, Apache-2.0 licensed</p>
       </footer>

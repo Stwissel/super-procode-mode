@@ -3,35 +3,32 @@
  * A simple web component to display rating stars
  */
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateScore } from './ratingSlice';
 
-export default class DemoRating extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      children: props.children,
-      id: props.id,
-      stars: props.stars,
-      score: props.score,
-      size: props.size
-    };
-  }
+export default function DemoRating({ id }) {
+  const rating = useSelector((state) => state.ratingStore.ratings[id]);
+  const dispatch = useDispatch();
 
-  handleStarClick = (star) => {
-    this.setState({ ...this.state, score: star });
-    // Emit event with star and currentScore;
+  const handleStarClick = (star) => {
+    console.log('handleStarClick', star);
+    if (star !== rating.score) {
+      const newRating = { id, score: star };
+      dispatch(updateScore(newRating));
+    }
   };
 
-  renderStars = () => {
-    console.log('renderStars', this.state.score);
+  const renderStars = () => {
+    console.log('renderStars', rating.score);
     const starElements = [];
-    for (let i = 1; i <= this.state.stars; i++) {
-      const isHighlighted = i <= this.state.score;
+    for (let i = 1; i <= rating.stars; i++) {
+      const isHighlighted = i <= rating.score;
       starElements.push(
         <span
           key={i}
-          onClick={() => this.handleStarClick(i)}
+          onClick={() => handleStarClick(i)}
           style={{
-            fontSize: this.state.size,
+            fontSize: rating.size,
             color: isHighlighted ? 'gold' : 'gray'
           }}
         >
@@ -42,12 +39,10 @@ export default class DemoRating extends React.Component {
     return starElements;
   };
 
-  render() {
-    return (
-      <div className="demorating">
-        <h3>{this.state.children}</h3>
-        {this.renderStars()}
-      </div>
-    );
-  }
+  return (
+    <div className="demorating">
+      <h3>{rating.title}</h3>
+      {renderStars()}
+    </div>
+  );
 }

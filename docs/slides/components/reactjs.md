@@ -9,8 +9,12 @@
 ```bash
 npx create-react-app react-component-demo
 cd react-component-demo
+# DO this now or learn the hard way
+npm install -s @reduxjs/toolkit react-redux
 npm start
 ```
+
+Pro tip: [Redux DevTools](https://chromewebstore.google.com/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
 
 ---
 
@@ -22,13 +26,14 @@ npm start
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.2",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "react-redux": "^9.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -52,6 +57,21 @@ npm start
 
 ---
 
+## Prepare state management
+
+```js
+import { configureStore } from '@reduxjs/toolkit';
+import ratingReducer from './components/ratingSlice';
+
+export const store = configureStore({
+  reducer: {
+    ratings: ratingReducer
+  }
+});
+```
+
+---
+
 ## Starter code
 
 ```js
@@ -59,11 +79,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import { store } from './store';
+import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
 ```
