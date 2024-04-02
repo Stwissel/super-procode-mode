@@ -1,3 +1,17 @@
-# Axios
+# History of fetching data<!-- .element: class="r-fit-text" -->
 
-## and others
+- [DHTML](https://en.wikipedia.org/wiki/Dynamic_HTML) was introduced in **1997** with Internet Explorer 4.0. Since the then dominant Browser didn't support it, it initially took off slowly.
+- Microsoft used it in Outlook Web access in **2000**,
+- while Google used `XMLHttpRequest` in GMail in **2004**
+- The term [AJAX](<https://en.wikipedia.org/wiki/Ajax_(programming)>) is attributed
+  to [JJ Garrett](https://en.wikipedia.org/wiki/Jesse_James_Garrett) in **2005**.
+- Now it had a name, adoption exploded
+- W3C adopted it as standard in 2006
+
+---
+
+## Ajax in Frameworks
+
+- Axios
+- dojo
+- jQuery

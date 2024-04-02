@@ -1,7 +1,7 @@
 const express = require('express');
 const ReadLine = require('n-readlines');
 const fs = require('fs');
-const port = 3000;
+const port = 3002;
 const app = express();
 
 app.use(express.static('public'));

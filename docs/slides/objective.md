@@ -1,5 +1,5 @@
 # Objective
 
 - Review the current landscape
-- Apprechiate exisiting standards
+- Appreciate exisiting standards
 - Gain knowledge to decide on (or against) a framework

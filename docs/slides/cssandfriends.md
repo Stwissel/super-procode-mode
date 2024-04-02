@@ -1,4 +1,6 @@
-# HISTORY<br />(Layout system)
+# HISTORY
+
+## (Layout system)
 
 ---
 
@@ -21,8 +23,8 @@
 - Based on Ruby
 - Provided variables, mathematical operators, mixins, functions, loops, nesting and more
 - SASS vs SCSS
-    - SASS: indents and line breaks (à la YAML), smaller files
-    - SCSS: brackets and semi-colons, more like CSS
+  - SASS: indents and line breaks (à la YAML), smaller files
+  - SCSS: brackets and semi-colons, more like CSS
 - Adopted by Bootstrap from Bootstrap 4
 
 ---
@@ -42,9 +44,9 @@
 
 - Open source CSS framework
 - Utility classes
-    - Classes do not target specific components
-    - More granular
-    - Fewer changes required to stylesheet
-    - More verbose HTML, more classes to achieve outcome
+  - Classes do not target specific components
+  - More granular
+  - Fewer changes required to stylesheet
+  - More verbose HTML, more classes to achieve outcome
 - Aso uses precompiling
-    - JIT processing, parses HTML and works out combinations
+  - JIT processing, parses HTML and works out combinations
