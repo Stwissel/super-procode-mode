@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
+import { subscribeWithSelector } from 'zustand/middleware';
 
 const initialRating = {
   id: 'rating1',
@@ -10,81 +11,83 @@ const initialRating = {
 };
 
 export const useRatingStore = create()(
-  immer((set) => ({
-    ratings: {
-      [initialRating.id]: initialRating
-    },
+  subscribeWithSelector(
+    immer((set) => ({
+      ratings: {
+        [initialRating.id]: initialRating
+      },
 
-    removeAllRatings: () =>
-      set((state) => {
-        state.ratings = {};
-      }),
-    newRating: (payload) =>
-      set((state) => {
-        if (state.ratings[payload.id]) {
-          console.error('Rating already exists', payload);
-        } else {
-          state.ratings[payload.id] = payload;
-          if (payload.score > payload.stars) {
-            state.ratings[payload.id].score = payload.stars;
+      removeAllRatings: () =>
+        set((state) => {
+          state.ratings = {};
+        }),
+      newRating: (payload) =>
+        set((state) => {
+          if (state.ratings[payload.id]) {
+            console.error('Rating already exists', payload);
+          } else {
+            state.ratings[payload.id] = payload;
+            if (payload.score > payload.stars) {
+              state.ratings[payload.id].score = payload.stars;
+            }
           }
-        }
-      }),
+        }),
 
-    updateScore: (payload) =>
-      set((state) => {
-        const toUpdate = payload;
-        if (Array.isArray(toUpdate)) {
-          toUpdate.forEach((rating) => {
-            if (state.ratings[rating.id]) {
-              const proxyState = state.ratings[rating.id];
-              proxyState.score = Math.min(rating.score, proxyState.stars);
-            } else {
-              console.error('updateScore not found', rating.id);
-            }
-          });
-        } else if (state.ratings[toUpdate?.id]) {
-          const proxyState = state.ratings[toUpdate.id];
-          proxyState.score = Math.min(toUpdate.score, proxyState.stars);
-        } else {
-          console.error('Invalid updateScore payload', payload);
-        }
-      }),
-    updateStars: (payload) =>
-      set((state) => {
-        const toUpdate = payload;
-        if (Array.isArray(toUpdate)) {
-          toUpdate.forEach((rating) => {
-            if (state.ratings[rating.id]) {
-              const proxyState = state.ratings[rating.id];
-              proxyState.stars = rating.stars;
-            } else {
-              console.error('updateStars not found', rating.id);
-            }
-          });
-        } else if (state.ratings[toUpdate?.id]) {
-          const proxyState = state.ratings[toUpdate.id];
-          proxyState.stars = toUpdate.stars;
-        } else {
-          console.error('Invalid updateStars payload', payload);
-        }
-      }),
-    updateSize: (payload) =>
-      set((state) => {
-        const toUpdate = payload;
-        if (Array.isArray(toUpdate)) {
-          toUpdate.forEach((rating) => {
-            if (state.ratings[rating.id]) {
-              state.ratings[rating.id].size = rating.size;
-            } else {
-              console.error('updateSize not found', rating.id);
-            }
-          });
-        } else if (state.ratings[toUpdate?.id]) {
-          state.ratings[toUpdate.id].size = toUpdate.size;
-        } else {
-          console.error('Invalid updateSize payload', payload);
-        }
-      })
-  }))
+      updateScore: (payload) =>
+        set((state) => {
+          const toUpdate = payload;
+          if (Array.isArray(toUpdate)) {
+            toUpdate.forEach((rating) => {
+              if (state.ratings[rating.id]) {
+                const proxyState = state.ratings[rating.id];
+                proxyState.score = Math.min(rating.score, proxyState.stars);
+              } else {
+                console.error('updateScore not found', rating.id);
+              }
+            });
+          } else if (state.ratings[toUpdate?.id]) {
+            const proxyState = state.ratings[toUpdate.id];
+            proxyState.score = Math.min(toUpdate.score, proxyState.stars);
+          } else {
+            console.error('Invalid updateScore payload', payload);
+          }
+        }),
+      updateStars: (payload) =>
+        set((state) => {
+          const toUpdate = payload;
+          if (Array.isArray(toUpdate)) {
+            toUpdate.forEach((rating) => {
+              if (state.ratings[rating.id]) {
+                const proxyState = state.ratings[rating.id];
+                proxyState.stars = rating.stars;
+              } else {
+                console.error('updateStars not found', rating.id);
+              }
+            });
+          } else if (state.ratings[toUpdate?.id]) {
+            const proxyState = state.ratings[toUpdate.id];
+            proxyState.stars = toUpdate.stars;
+          } else {
+            console.error('Invalid updateStars payload', payload);
+          }
+        }),
+      updateSize: (payload) =>
+        set((state) => {
+          const toUpdate = payload;
+          if (Array.isArray(toUpdate)) {
+            toUpdate.forEach((rating) => {
+              if (state.ratings[rating.id]) {
+                state.ratings[rating.id].size = rating.size;
+              } else {
+                console.error('updateSize not found', rating.id);
+              }
+            });
+          } else if (state.ratings[toUpdate?.id]) {
+            state.ratings[toUpdate.id].size = toUpdate.size;
+          } else {
+            console.error('Invalid updateSize payload', payload);
+          }
+        })
+    }))
+  )
 );

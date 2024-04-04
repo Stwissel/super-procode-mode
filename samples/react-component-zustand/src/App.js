@@ -9,6 +9,7 @@ import DemoNewRating from './components/DemoNewRating';
 function App() {
   const [msg, setMsg] = useState('Press a button');
   const [eventListener, setEventListener] = useState(false);
+  const [listenerList, setListenerList] = useState([]);
 
   const ratings = useRatingStore((state) => state.ratings);
   const clearRatings = useRatingStore((state) => state.removeAllRatings);
@@ -120,27 +121,35 @@ function App() {
    * Hook listeners to all ratings to listen for changes
    * and display them on top of the page
    */
-  // FIXME: Fix this zustand style
   const listenForRatingChange = () => {
     if (eventListener) {
-      message('Event listener removed');
-      setEventListener(false);
-      Object.keys(ratings).forEach((key) => {
-        const rating = ratings[key];
-        rating.unsubscribe();
+      listenerList.forEach((unSubfunction) => {
+        unSubfunction();
       });
+
+      setEventListener(false);
+      message('Event listener removed');
       return;
     }
     setEventListener(true);
     message('Event listener started');
+    const subscribed = [];
     Object.keys(ratings).forEach((key) => {
-      const rating = ratings[key];
-      useRatingStore.subscribe((state) => {
-        changeMessage(
-          `Rating ${rating.id} changed to ${rating.score}/${rating.stars}`
-        );
-      });
+      const sub = useRatingStore.subscribe(
+        (state) => state.ratings[key].id,
+        (newR, oldR) => changeSignal(newR, oldR)
+      );
+      subscribed.push(sub);
     });
+    setListenerList(subscribed);
+  };
+
+  const changeSignal = (newR, oldR) => {
+    if (newR.score !== oldR.score || newR.stars !== oldR.stars) {
+      changeMessage(
+        `Rating ${newR.id} changed from ${oldR.score}/${oldR.stars} to ${newR.score}/${newR.stars}`
+      );
+    }
   };
 
   const renderRatings = () => {
