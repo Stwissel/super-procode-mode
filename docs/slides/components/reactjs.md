@@ -4,6 +4,17 @@
 
 ---
 
+## The nature of reactJS applications<!-- .element: class="r-fit-text" -->
+
+- HTML for scaffolding only
+- reactJS handles complete UI
+- state is managed in JavaScript
+- components are functions
+- automatic update when variables change
+- JSX for UI (= HTML produced by JS)
+
+---
+
 ## Start
 
 ```bash

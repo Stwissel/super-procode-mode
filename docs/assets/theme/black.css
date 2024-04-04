@@ -4,7 +4,13 @@
  * By Hakim El Hattab, http://hakim.se
  */
 @import url(./fonts/source-sans-pro/source-sans-pro.css);
-section.has-light-background, section.has-light-background h1, section.has-light-background h2, section.has-light-background h3, section.has-light-background h4, section.has-light-background h5, section.has-light-background h6 {
+section.has-light-background,
+section.has-light-background h1,
+section.has-light-background h2,
+section.has-light-background h3,
+section.has-light-background h4,
+section.has-light-background h5,
+section.has-light-background h6 {
   color: #222;
 }
 
@@ -30,7 +36,7 @@ section.has-light-background, section.has-light-background h1, section.has-light
   --r-heading2-size: 1.6em;
   --r-heading3-size: 1.3em;
   --r-heading4-size: 1em;
-  --r-code-font: monospace;
+  --r-code-font: Jetbrains mono, Menlo, monospace;
   --r-link-color: #42affa;
   --r-link-color-dark: #068de9;
   --r-link-color-hover: #8dcffc;
@@ -208,7 +214,7 @@ section.has-light-background, section.has-light-background h1, section.has-light
 .reveal pre {
   display: block;
   position: relative;
-  width: 90%;
+  width: 95%;
   margin: var(--r-block-margin) auto;
   text-align: left;
   font-size: 0.55em;
@@ -222,6 +228,7 @@ section.has-light-background, section.has-light-background h1, section.has-light
   font-family: var(--r-code-font);
   text-transform: none;
   tab-size: 2;
+  color: red;
 }
 
 .reveal pre code {
@@ -257,13 +264,13 @@ section.has-light-background, section.has-light-background h1, section.has-light
   border-bottom: 1px solid;
 }
 
-.reveal table th[align=center],
-.reveal table td[align=center] {
+.reveal table th[align='center'],
+.reveal table td[align='center'] {
   text-align: center;
 }
 
-.reveal table th[align=right],
-.reveal table td[align=right] {
+.reveal table th[align='right'],
+.reveal table td[align='right'] {
   text-align: right;
 }
 

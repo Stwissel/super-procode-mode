@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useState } from 'react';
 import { useRatingStore } from './store';
+import { shallow } from 'zustand/shallow';
 
 import DemoRating from './components/DemoRating';
 import DemoMessage from './components/DemoMessage';
@@ -136,8 +137,13 @@ function App() {
     const subscribed = [];
     Object.keys(ratings).forEach((key) => {
       const sub = useRatingStore.subscribe(
-        (state) => state.ratings[key].id,
-        (newR, oldR) => changeSignal(newR, oldR)
+        (state) => [
+          state.ratings[key].id,
+          state.ratings[key].score,
+          state.ratings[key].stars
+        ],
+        (newR, oldR) => changeSignal(newR, oldR),
+        { equalityFn: shallow }
       );
       subscribed.push(sub);
     });
@@ -145,14 +151,13 @@ function App() {
   };
 
   const changeSignal = (newR, oldR) => {
-    if (newR.score !== oldR.score || newR.stars !== oldR.stars) {
-      changeMessage(
-        `Rating ${newR.id} changed from ${oldR.score}/${oldR.stars} to ${newR.score}/${newR.stars}`
-      );
-    }
+    changeMessage(
+      `Rating ${newR[0]} changed from ${oldR[1]}/${oldR[2]} to ${newR[1]}/${newR[2]}`
+    );
   };
 
   const renderRatings = () => {
+    console.log('renderRatings');
     const ratingElements = [];
     Object.keys(ratings).forEach((key) => {
       const ratingdef = ratings[key];
