@@ -40,7 +40,7 @@
 
 ---
 
-<img src="slides/components/dependencies.png"
+<img src="slides/components/dependencies.png"/>
 
 ---
 
