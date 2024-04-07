@@ -2,6 +2,10 @@
 
 ## (Layout system)
 
+<br /><br /><br />
+
+<p class="r-fit-text">Background: <a href="https://commons.wikimedia.org/wiki/File:Original_Blueprint_of_United_States_National_Agricultural_Library.jpg">Warner, Burns, Toan, and Lunde architecture firm</a>, Public domain, via Wikimedia Commons</p>
+
 ---
 
 ## CSS

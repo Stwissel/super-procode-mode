@@ -9,6 +9,7 @@
 - HTML for scaffolding only
 - reactJS handles complete UI
 - state is managed in JavaScript
+- unidirectional flow top down
 - components are functions
 - automatic update when variables change
 - JSX for UI (= HTML produced by JS)
