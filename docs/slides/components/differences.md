@@ -40,4 +40,8 @@
 
 ---
 
+<img src="slides/components/dependencies.png"
+
+---
+
 ## Web Component Choices <!-- .element: class="r-fit-text" -->
