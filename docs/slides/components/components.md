@@ -1,8 +1,4 @@
-# Components
-
----
-
-## What's in the box?<!-- .element: class="r-fit-text" -->
+# What's in the box?<!-- .element: class="r-fit-text" -->
 
 The example is a small rating component and a page that allows to interact with it.
 

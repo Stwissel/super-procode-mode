@@ -1,15 +1,11 @@
-# Web components
-
----
-
-## Highlights
+# Highlights
 
 - Extends HTML elements frictionless
 - Components are JavaScript classes
 - Framework neutral
 - Participate in DOM
 - W3C standard
-- Owns their properites / attributes
+- Owns their properties / attributes
 
 ---
 
