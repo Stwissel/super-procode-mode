@@ -457,6 +457,18 @@
                         "val": "v3"
                     }
                 ]
+            },
+            {
+                "label": "Shoelace",
+                "data": [
+                    {
+                        "timeRange": [
+                            "2020",
+                            "2024"
+                        ],
+                        "val": "continious"
+                    }
+                ]
             }
         ]
     }
