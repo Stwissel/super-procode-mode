@@ -6,6 +6,8 @@
 
 ---
 
+## Fetching chunked responses
+
 ```js
 fetch(dataUrl)
   .then((response) => response.body)

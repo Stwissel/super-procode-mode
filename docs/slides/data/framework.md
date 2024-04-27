@@ -1,9 +1,9 @@
 # What's in the box?<!-- .element: class="r-fit-text" -->
 
-- example using axios in nodeJS: `axios`
-- example using axios in browser: `axios-browser`
-- example using fetch: `fetch`
-- slow serving server with axios and fetch: `slow-serve`
+- example using axios in nodeJS: [`axios`](https://github.com/Stwissel/super-procode-mode/tree/main/samples/axios)
+- example using axios in browser: [`axios-browser`](https://github.com/Stwissel/super-procode-mode/tree/main/samples/axios-browser)
+- example using fetch: [`fetch`](https://github.com/Stwissel/super-procode-mode/tree/main/samples/fetch)
+- slow serving server with axios and fetch: [`slow-serve`](https://github.com/Stwissel/super-procode-mode/tree/main/samples/slow-serve)
 
 ---
 
